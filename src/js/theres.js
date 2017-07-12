@@ -36,8 +36,33 @@ var areaDatetimeHtml = areaDatetimeTemplate({
 
 $('.ht-weather-datetime').html(areaDatetimeHtml);
 
+var lat = model.location.lat;
+var lng = model.location.lng;
 
+var apiKey = '162ac90797a6d87292b1b9dd87e80fe7';
+var apiUrl = 'http://openweathermap.org/data/2.5/weather' +
+    '?lat=' + lat + '&lon=' + lng +
+    '&appid=' + apiKey +
+    '&units=metric' +
+    '&callback=?';
 
+apiUrl = 'https://samples.openweathermap.org/data/2.5/weather' +
+    '?lat=35&lon=139' +
+    '&appid=b1b15e88fa797225412429c1c50c122a1' +
+    '&units=metics' +
+    '&callback=?';
+
+$.getJSON(apiUrl, function(result) {
+
+});
+
+var areaForecastTemplate = require('../template/theres/area-forecast.hbs');
+var areaForecastHtml = areaForecastTemplate({
+    icon: './img/weather/01d.svg',
+    degree: '30'
+});
+
+$('.ht-weather-forecast').html(areaForecastHtml);
 
 
 
