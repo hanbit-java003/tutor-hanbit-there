@@ -40,7 +40,7 @@ var lat = model.location.lat;
 var lng = model.location.lng;
 
 var apiKey = '162ac90797a6d87292b1b9dd87e80fe7';
-var apiUrl = 'http://openweathermap.org/data/2.5/weather' +
+var apiUrl = 'http://api.openweathermap.org/data/2.5/weather' +
     '?lat=' + lat + '&lon=' + lng +
     '&appid=' + apiKey +
     '&units=metric' +
@@ -53,16 +53,17 @@ apiUrl = 'https://samples.openweathermap.org/data/2.5/weather' +
     '&callback=?';
 
 $.getJSON(apiUrl, function(result) {
+    var icon = result.weather[0].icon;
+    var degree = result.main.temp;
 
+    var areaForecastTemplate = require('../template/theres/area-forecast.hbs');
+    var areaForecastHtml = areaForecastTemplate({
+        icon: './img/weather/' + icon + '.svg',
+        degree: parseInt(degree)
+    });
+
+    $('.ht-weather-forecast').html(areaForecastHtml);
 });
-
-var areaForecastTemplate = require('../template/theres/area-forecast.hbs');
-var areaForecastHtml = areaForecastTemplate({
-    icon: './img/weather/01d.svg',
-    degree: '30'
-});
-
-$('.ht-weather-forecast').html(areaForecastHtml);
 
 
 

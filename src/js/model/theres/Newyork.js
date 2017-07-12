@@ -15,5 +15,9 @@ module.exports = {
         title: 'TIP',
         value: '110v이므로 변환플러그(돼지코)가 필요'
     }],
-    timezone: 'America/New_York'
+    timezone: 'America/New_York',
+    location: {
+        lat: 40.730610,
+        lng: -73.935242
+    }
 };
