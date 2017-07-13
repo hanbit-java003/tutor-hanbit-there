@@ -19,5 +19,18 @@ module.exports = {
     location: {
         lat: 40.730610,
         lng: -73.935242
-    }
+    },
+    traffics: [{
+        title: '지하철(Subway)',
+        icon: 'subway',
+        contents: '뉴욕 메트로의 첫번째 대표주자 지하철. 지하철 내부에서 공연을 즐길 수 있는 뉴욕의 서브웨이.'
+    }, {
+        title: '기차(LIRR)',
+        icon: 'train',
+        contents: '뉴욕의 곳곳으로 다니는 \'럴\'이라고 불리는 뉴욕 기차. 따로 무제한 패스가 있으니 여행 떠나기전 꼭 확인할 것'
+    }, {
+        title: '버스(Bus)',
+        icon: 'bus',
+        contents: '버스 정류장에서 문자를 보내면 버스 도착시간 답장을 받아 확인할 수 있다.'
+    }]
 };
