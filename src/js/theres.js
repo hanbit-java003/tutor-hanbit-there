@@ -100,7 +100,7 @@ tab.setCallback(2, function() {
     areaMap.panTo(model.location);
 });
 
-
+$('.ht-area-name').text(model.nameEn);
 
 
 
