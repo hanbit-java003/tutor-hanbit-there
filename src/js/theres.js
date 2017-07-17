@@ -102,6 +102,31 @@ tab.setCallback(2, function() {
 
 $('.ht-area-name').text(model.nameEn);
 
+var activityTemplate = require('../template/ht-activity.hbs');
+var activities = [
+    'guam-cocopalm-garden-beach',
+    'guam-dolphin-cruise',
+    'guam-dolphin-cruise-a',
+    'guam-dive-experience',
+];
+
+for (var i=0; i<activities.length; i++) {
+    var activityModel = require('./model/activities/' + activities[i]);
+    var activityHtml = activityTemplate(activityModel);
+
+    $('.ht-activities-list').append(activityHtml);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
