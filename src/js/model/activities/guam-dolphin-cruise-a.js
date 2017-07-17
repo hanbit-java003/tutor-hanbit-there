@@ -2,7 +2,7 @@ module.exports = {
     name: '괌 알루팡 돌핀크루즈',
     summary: '물감을 푼 듯 아름다운 괌의 바다에서 만나는 야생 돌고래!',
     img: './img/activities/guam-dolphin-cruise-a01.jpg',
-    price: '71,470',
-    orgPrice: '74,920',
+    price: 71470,
+    orgPrice: 74920,
     badges: ['hot', 'point']
 };

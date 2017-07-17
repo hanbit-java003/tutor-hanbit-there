@@ -1,19 +1,19 @@
 <li style="background-image: url({{img}})">
     <div class="dark-layer">
-    {{#if rank}}
+    {{~#if rank~}}
         <div class="ht-item-best">{{rank}}</div>
-    {{/if}}
+    {{~/if~}}
         <div class="ht-item-text">
-            {{#if quick}}
+            {{~#if quick~}}
             <div class="ht-item-quick">
                 <i class="glyphicon glyphicon-flash"></i>
                 바로예약
             </div>
-            {{/if}}
+            {{~/if~}}
             <div class="ht-item-title">{{name}}</div>
             <div class="ht-item-from">from</div>
             <div class="ht-item-price">
-                ₩{{price}} <span class="ht-item-org-price">{{orgPrice}}</span>
+                ₩{{~format price}} <span class="ht-item-org-price">{{format orgPrice}}</span>
             </div>
         </div>
     </div>
