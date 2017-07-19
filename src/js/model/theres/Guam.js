@@ -3,6 +3,11 @@ module.exports = {
     name: '괌',
     nameEn: 'Guam',
     summary: '남태평양 푸른 바다의 넘실거림을 보고있자니<br>어제가 오늘인 듯, 오늘이 어제인 듯 시간의 흐름이 느껴지지 않는곳, 괌',
+    timezone: 'Pacific/Guam',
+    location: {
+        lat: 13.444304,
+        lng: 144.793732
+    },
     areaInfo: [{
         title: '언어',
         value: '영어'
@@ -16,11 +21,6 @@ module.exports = {
         title: 'TIP',
         value: '110v이므로 변환플러그(돼지코)가 필요'
     }],
-    timezone: 'Pacific/Guam',
-    location: {
-        lat: 13.444304,
-        lng: 144.793732
-    },
     traffics: [{
         title: '레드 괌 셔틀 버스',
         icon: 'bus',

@@ -3,6 +3,11 @@ module.exports = {
     name: '뉴욕',
     nameEn: 'Newyork',
     summary: '오늘은 내 남은 인생의 첫날이다<br>-센트럴파크의 어느 벤치에 누군가가 세긴 낙서',
+    timezone: 'America/New_York',
+    location: {
+        lat: 40.730610,
+        lng: -73.935242
+    },
     areaInfo: [{
         title: '언어',
         value: '영어'
@@ -16,11 +21,6 @@ module.exports = {
         title: 'TIP',
         value: '110v이므로 변환플러그(돼지코)가 필요'
     }],
-    timezone: 'America/New_York',
-    location: {
-        lat: 40.730610,
-        lng: -73.935242
-    },
     traffics: [{
         title: '지하철(Subway)',
         icon: 'subway',
