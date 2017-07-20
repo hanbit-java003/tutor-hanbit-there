@@ -1,0 +1,59 @@
+html {
+  height: 100%;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@menu-width: 180px;
+
+.admin-menu {
+  position: fixed;
+  width: @menu-width;
+  height: 100%;
+  background-color: #bbb;
+}
+
+.hta-logo {
+  color: #3666c6;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 200%;
+  cursor: pointer;
+}
+
+.hta-menu {
+  padding: 5px;
+  border-bottom: solid 1px #ddd;
+  background-color: #999;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hta-menu:hover {
+  background-color: #3666c6;
+  color: #fff;
+}
+
+.hta-sub-menu {
+  display: none;
+}
+
+.hta-sub-menu > li {
+  padding: 5px 5px 5px 20px;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.hta-sub-menu > li:hover {
+  background-color: #3999ff;
+  color: #fff;
+}
+
+.admin-contents {
+  padding-left: @menu-width;
+}

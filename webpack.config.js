@@ -16,6 +16,12 @@ const pages = [{
 }, {
     html: 'sub',
     script: 'sub',
+}, {
+    html: 'admin/index',
+    script: 'admin/main',
+}, {
+    html: 'admin/there-group',
+    script: 'admin/there-group',
 }];
 
 module.exports = {
