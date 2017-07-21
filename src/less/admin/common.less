@@ -2,16 +2,22 @@ html {
   height: 100%;
 }
 
+@menu-width: 180px;
+
+body {
+  padding-left: @menu-width;
+}
+
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-@menu-width: 180px;
-
 .admin-menu {
   position: fixed;
+  top: 0px;
+  left: 0px;
   width: @menu-width;
   height: 100%;
   background-color: #bbb;
@@ -69,5 +75,12 @@ ul {
 }
 
 .admin-contents {
-  padding-left: @menu-width;
+  padding: 30px;
+}
+
+.hta-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  border-bottom: solid 1px #ccc;
 }
