@@ -22,6 +22,9 @@ const pages = [{
 }, {
     html: 'admin/there-group',
     script: 'admin/there-group',
+}, {
+    html: 'admin/there-info',
+    script: 'admin/there-info',
 }];
 
 module.exports = {
