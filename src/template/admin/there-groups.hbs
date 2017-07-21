@@ -1,0 +1,13 @@
+{{#each this~}}
+<tr>
+    <td>{{sum @index 1}}</td>
+    <td>{{id}}</td>
+    <td>{{name}}</td>
+    <td>{{thereCount}}</td>
+    <td>
+        <button class="btn btn-xs">위로</button>
+        <button class="btn btn-xs">아래로</button>
+    </td>
+    <td>{{formatDt updateDt null "YYYY.MM.DD HH:mm:ss"}}</td>
+</tr>
+{{~/each}}
