@@ -76,7 +76,7 @@ function init(id) {
                 url: '/api/admin/there/group/' + groupId,
                 method: 'OPTIONS',
                 success: function(result) {
-                    if (result.ok) {
+                    if (!result.exists) {
                         alert('사용할 수 있는 ID입니다.');
                         validId = true;
                     }
