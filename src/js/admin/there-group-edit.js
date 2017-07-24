@@ -110,6 +110,9 @@ function init(id) {
                 method: 'DELETE',
                 success: function(result) {
                     location.href = './there-group.html';
+                },
+                error: function() {
+                    alert('포함된 지역이 있으면 삭제할 수 없습니다.');
                 }
             });
         });
