@@ -23,6 +23,9 @@ const pages = [{
     html: 'admin/there-group',
     script: 'admin/there-group',
 }, {
+    html: 'admin/there-group-edit',
+    script: 'admin/there-group-edit',
+}, {
     html: 'admin/there-info',
     script: 'admin/there-info',
 }];

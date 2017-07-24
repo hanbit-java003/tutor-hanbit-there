@@ -20,4 +20,40 @@ function setList(groups) {
     $('.hta-total-theres').text(_.reduce(groups, function(total, group) {
         return total + group.thereCount;
     }, 0));
+
+    attachEvents();
+}
+
+function attachEvents() {
+    $('.hta-there-group-order').on('click', function() {
+        var dir = $(this).attr('dir');
+        var row = $(this).parents('tr');
+
+        var param = {};
+
+        if (dir === 'up') {
+            if (row.prev().length === 0) {
+                return;
+            }
+
+            param.idUp = row.attr('group-id');
+            param.idDown = row.prev().attr('group-id');
+        }
+        else if (dir === 'down') {
+            if (row.next().length === 0) {
+                return;
+            }
+
+            param.idUp = row.next().attr('group-id');
+            param.idDown = row.attr('group-id');
+        }
+
+        $.ajax({
+            url: '/api/admin/there/group/order',
+            data: param,
+            success: function(result) {
+                setList(result);
+            }
+        })
+    });
 }
