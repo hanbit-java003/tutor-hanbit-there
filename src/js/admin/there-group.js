@@ -3,6 +3,10 @@ require('../../less/admin/there-group.less');
 var _ = require('lodash');
 var common = require('./common');
 
+$('.hta-there-group-add').on('click', function() {
+    location = './there-group-edit.html';
+});
+
 $.ajax({
     url: '/api/admin/there/groups',
     success: function(result) {
@@ -25,7 +29,9 @@ function setList(groups) {
 }
 
 function attachEvents() {
-    $('.hta-there-group-order').on('click', function() {
+    $('.hta-there-group-order').on('click', function(event) {
+        event.stopPropagation();
+
         var dir = $(this).attr('dir');
         var row = $(this).parents('tr');
 
@@ -55,5 +61,11 @@ function attachEvents() {
                 setList(result);
             }
         })
+    });
+
+    $('.hta-there-groups > tbody > tr').on('click', function() {
+        var id = $(this).attr('group-id');
+
+        location.href = './there-group-edit.html?id=' + id;
     });
 }
