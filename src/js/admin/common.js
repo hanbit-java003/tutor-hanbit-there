@@ -20,6 +20,14 @@ $('.hta-sub-menu > li').on('click', function() {
     location.href = link + '.html';
 });
 
+$('.dropdown-menu a').on('click', function(event) {
+    event.preventDefault();
+
+    var html = $(this).html();
+    var dropdownTitle = $(this).parents('.btn-group').find('.dropdown-title');
+    dropdownTitle.html(html);
+});
+
 function openDialog(options) {
     var modalTemplate = require('../../template/admin/modal.hbs');
     var modalHtml = modalTemplate({
