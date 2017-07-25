@@ -108,12 +108,12 @@ function init(id) {
             common.openDialog({
                 body: '정말 삭제하시겠습니까?',
                 buttons: [{
-                    id: 'yes',
-                    name: 'Yes',
-                    style: 'primary'
+                    id: 'delete',
+                    name: '삭제',
+                    style: 'danger'
                 }],
                 handler: function(btnId) {
-                    if (btnId === 'yes') {
+                    if (btnId === 'delete') {
                         $.ajax({
                             url: '/api/admin/there/group/' + id,
                             method: 'DELETE',
