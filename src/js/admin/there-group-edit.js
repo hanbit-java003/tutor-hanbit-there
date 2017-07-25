@@ -105,6 +105,13 @@ function init(id) {
         });
 
         $('.hta-delete').on('click', function() {
+            common.openDialog('정말 삭제하시겠습니까?');
+            var result = confirm('정말 삭제하시겠습니까?');
+
+            if (!result) {
+                return;
+            }
+
             $.ajax({
                 url: '/api/admin/there/group/' + id,
                 method: 'DELETE',
