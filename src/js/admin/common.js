@@ -20,18 +20,37 @@ $('.hta-sub-menu > li').on('click', function() {
     location.href = link + '.html';
 });
 
-function openDialog(msg) {
-    if ($('.hta-modal').length === 0) {
-        var modalTemplate = require('../../template/admin/modal.hbs');
-        var modalHtml = modalTemplate();
-        var dialog = $(modalHtml);
+function openDialog(options) {
+    var modalTemplate = require('../../template/admin/modal.hbs');
+    var modalHtml = modalTemplate({
+        title: options.title || 'HT Admin',
+        body: options.body,
+        buttons: options.buttons || []
+    });
+    var dialog = $(modalHtml);
 
-        $('body').append(dialog);
-    }
+    $('body').append(dialog);
+
+    $('.hta-dialog-btn').on('click', function() {
+        if (typeof options.handler === 'function') {
+            var btnId = $(this).attr('btn-id');
+
+            options.handler(btnId);
+        }
+    });
+
+    $('.hta-modal').on('hidden.bs.modal', function() {
+        $('.hta-modal').remove();
+    });
 
     $('.hta-modal').modal('show');
 }
 
+function hideDialog() {
+    $('.hta-modal').modal('hide');
+}
+
 module.exports = {
-    openDialog: openDialog
+    openDialog: openDialog,
+    closeDialog: hideDialog
 };

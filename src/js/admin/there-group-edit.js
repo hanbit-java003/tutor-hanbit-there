@@ -105,21 +105,28 @@ function init(id) {
         });
 
         $('.hta-delete').on('click', function() {
-            common.openDialog('정말 삭제하시겠습니까?');
-            var result = confirm('정말 삭제하시겠습니까?');
+            common.openDialog({
+                body: '정말 삭제하시겠습니까?',
+                buttons: [{
+                    id: 'yes',
+                    name: 'Yes',
+                    style: 'primary'
+                }],
+                handler: function(btnId) {
+                    if (btnId === 'yes') {
+                        $.ajax({
+                            url: '/api/admin/there/group/' + id,
+                            method: 'DELETE',
+                            success: function(result) {
+                                location.href = './there-group.html';
+                            },
+                            error: function() {
+                                alert('포함된 지역이 있으면 삭제할 수 없습니다.');
+                            }
+                        });
 
-            if (!result) {
-                return;
-            }
-
-            $.ajax({
-                url: '/api/admin/there/group/' + id,
-                method: 'DELETE',
-                success: function(result) {
-                    location.href = './there-group.html';
-                },
-                error: function() {
-                    alert('포함된 지역이 있으면 삭제할 수 없습니다.');
+                        common.closeDialog();
+                    }
                 }
             });
         });
