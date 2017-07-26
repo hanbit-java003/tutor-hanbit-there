@@ -21,12 +21,16 @@ $('.hta-sub-menu > li').on('click', function() {
 });
 
 $('.dropdown-menu a').on('click', function(event) {
+    addDropdownEvent(event, this);
+});
+
+function addDropdownEvent(event, element) {
     event.preventDefault();
 
-    var html = $(this).html();
-    var dropdownTitle = $(this).parents('.btn-group').find('.dropdown-title');
+    var html = $(element).html();
+    var dropdownTitle = $(element).parents('.btn-group').find('.dropdown-title');
     dropdownTitle.html(html);
-});
+}
 
 function openDialog(options) {
     var modalTemplate = require('../../template/admin/modal.hbs');
@@ -60,5 +64,6 @@ function hideDialog() {
 
 module.exports = {
     openDialog: openDialog,
-    closeDialog: hideDialog
+    closeDialog: hideDialog,
+    addDropdownEvent: addDropdownEvent
 };
