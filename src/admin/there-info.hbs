@@ -8,7 +8,7 @@
 {{> ../../template/admin/menu group-there="true" there-info="true"}}
 <div class="admin-contents">
     <div class="hta-title">지역 정보 관리</div>
-    <div>
+    <div class="hta-there-search-form">
         <div id="hta-there-group-select" class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="dropdown-title">지역그룹</span> <span class="caret"></span>
@@ -21,7 +21,19 @@
                 <li><a href="#">국내</a></li>
             </ul>
         </div>
+        <div id="hta-there-search" class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search fa-flip-horizontal"></i></span>
+            <input type="text" class="form-control" placeholder="지역명 또는 지역ID" aria-describedby="basic-addon1">
+        </div>
+        <button class="hta-add-there btn btn-primary">지역추가</button>
     </div>
+    <ul class="hta-there-list">
+        <li>
+            <div class="hta-there-img"
+                style="background-image: url(../img/theres/Guam.jpg)"></div>
+            <div class="hta-there-text"></div>
+        </li>
+    </ul>
 </div>
 </body>
 </html>

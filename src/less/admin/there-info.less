@@ -1,5 +1,48 @@
 @import 'common.less';
 
+.hta-there-search-form {
+  position: relative;
+}
+
+.hta-there-search-form > div {
+  vertical-align: top;
+  margin-right: 10px;
+}
+
 #hta-there-group-select > button {
+  display: inline-block;
   min-width: 100px;
+}
+
+#hta-there-search {
+  display: inline-table;
+  max-width: 300px;
+}
+
+.hta-add-there {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.hta-there-list {
+  margin-top: 20px;
+}
+
+@hta-there-card-height: 80px;
+
+.hta-there-list > li {
+  display: inline-block;
+  width: 300px;
+  height: @hta-there-card-height;
+  margin: 0px 15px 15px 0px;
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+}
+
+.hta-there-img {
+  display: inline-block;
+  width: @hta-there-card-height;
+  height: @hta-there-card-height;
+  background-size: cover;
+  background-position: 50% 50%;
 }
