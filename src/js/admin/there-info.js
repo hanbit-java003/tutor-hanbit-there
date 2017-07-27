@@ -1,5 +1,6 @@
 require('../../less/admin/there-info.less');
 var _ = require('lodash');
+var hangul = require('hangul-js');
 
 var common = require('./common');
 
@@ -59,9 +60,31 @@ $('#hta-there-search-input').on('keyup', function(event) {
     }
 });
 
-$('#hta-there-search-input').on('keypress compositionend', function() {
+$('#hta-there-search-input').on('input', function() {
     search();
 });
+
+function hangulSearch(text, keyword) {
+    var disassembled = hangul.disassemble(keyword);
+    var isChosung = true;
+
+    for (var i=0; i<disassembled.length; i++) {
+        if (!hangul.isCho(disassembled[i])) {
+            isChosung = false;
+            break;
+        }
+    }
+
+    if (!isChosung) {
+        return hangul.search(text, keyword) > -1;
+    }
+
+    var chosung = _.map(hangul.d(text, true), function(arr) {
+        return arr[0];
+    });
+
+    return hangul.search(chosung, keyword) > -1;
+}
 
 function search() {
     var keyword = _.kebabCase($('#hta-there-search-input').val().toLowerCase());
@@ -70,7 +93,7 @@ function search() {
         var id = there.id.toLowerCase();
         var name = there.name.toLowerCase();
 
-        if (id.includes(keyword) || name.indexOf(keyword) > -1) {
+        if (id.includes(keyword) || hangulSearch(name, keyword)) {
             delete there.hidden;
         }
         else {
