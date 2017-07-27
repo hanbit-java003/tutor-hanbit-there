@@ -1,4 +1,5 @@
 {{~#each this~}}
+{{~#unless hidden~}}
 <li>
     <div class="hta-there-img"
          style="background-image: url(.{{background}})"></div>
@@ -17,4 +18,5 @@
         </ul>
     </div>
 </li>
+{{~/unless~}}
 {{~/each~}}
