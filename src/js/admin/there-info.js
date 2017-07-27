@@ -32,7 +32,7 @@ function requestList(groupId) {
         success: function(result) {
             thereList = result;
 
-            setList(result);
+            search();
         }
     });
 }
@@ -60,8 +60,21 @@ $('#hta-there-search-input').on('keyup', function(event) {
     }
 });
 
+var searchTimer;
+var lastSearchTime = _.now();
+
 $('#hta-there-search-input').on('input', function() {
-    search();
+    clearTimeout(searchTimer);
+    var delay = 200;
+    var now = _.now();
+
+    if (now - lastSearchTime > 1000) {
+        delay = 0;
+    }
+
+    searchTimer = setTimeout(function() {
+        search();
+    }, delay);
 });
 
 function hangulSearch(text, keyword) {
@@ -102,4 +115,6 @@ function search() {
     });
 
     setList(thereList);
+
+    lastSearchTime = _.now();
 }
