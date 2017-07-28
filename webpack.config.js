@@ -28,6 +28,9 @@ const pages = [{
 }, {
     html: 'admin/there-info',
     script: 'admin/there-info',
+}, {
+    html: 'admin/there-info-edit',
+    script: 'admin/there-info-edit',
 }];
 
 module.exports = {
