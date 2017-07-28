@@ -6,6 +6,10 @@ var common = require('./common');
 
 var thereList = [];
 
+$('.hta-add-there').on('click', function() {
+    location.href = './there-info-edit.html';
+});
+
 $.ajax({
     url: '/api/admin/there/groups',
     success: function(result) {

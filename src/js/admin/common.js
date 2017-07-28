@@ -24,6 +24,12 @@ $('.dropdown-menu a').on('click', function(event) {
     addDropdownEvent(event, this);
 });
 
+$('.hta-file-select').on('click', function() {
+    var fileInputId = $(this).attr('for');
+
+    $('#' + fileInputId).click();
+});
+
 function addDropdownEvent(event, element) {
     event.preventDefault();
 
