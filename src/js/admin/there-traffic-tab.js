@@ -3,6 +3,16 @@ var traffics = [];
 function init(_traffics) {
     traffics = _traffics;
     setTraffics();
+
+    $('[tab-id=traffic] .hta-add-row').on('click', function() {
+        traffics.push({
+            icon: 'bus',
+            title: '교통편',
+            contents: '내용'
+        });
+
+        setTraffics();
+    });
 }
 
 function setTraffics() {

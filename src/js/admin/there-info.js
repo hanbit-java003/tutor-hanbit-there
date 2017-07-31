@@ -46,6 +46,12 @@ function setList(theres) {
     var theresHtml = theresTemplate(theres);
 
     $('.hta-there-list').html(theresHtml);
+
+    $('.hta-there-list > li').on('click', function() {
+        var thereId = $(this).attr('there-id');
+
+        location.href = './there-info-edit.html?id=' + thereId;
+    });
 }
 
 $('#hta-there-search-input').on('paste cut', function(event) {

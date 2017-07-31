@@ -3,6 +3,15 @@ var areaInfo = [];
 function init(_areaInfo) {
     areaInfo = _areaInfo;
     setAreaInfo();
+
+    $('[tab-id=info] .hta-add-row').on('click', function() {
+        areaInfo.push({
+            title: '제목',
+            value: '내용'
+        });
+
+        setAreaInfo();
+    });
 }
 
 function setAreaInfo() {
