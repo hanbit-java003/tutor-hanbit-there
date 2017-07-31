@@ -1,5 +1,8 @@
 require('../../less/admin/there-info-edit.less');
 
+var _ = require('lodash');
+_.move = require('lodash-move').default;
+
 var common = require('./common');
 var tab = require('./tab');
 
@@ -91,6 +94,8 @@ $('#hta-there-background').on('change', function() {
 });
 
 function setAreaInfo() {
+    $('.hta-area-info tbody').empty();
+
     var template = require('../../template/admin/there-info.hbs');
     var areaInfo = model.areaInfo;
 
@@ -101,6 +106,73 @@ function setAreaInfo() {
 
         $('.hta-area-info tbody').append(html);
     }
+
+    addAreaInfoEvents();
+}
+
+function addAreaInfoEvents() {
+    addBtnRowEvents();
+
+    $('.hta-area-info tbody tr').off('dblclick');
+    $('.hta-area-info tbody tr').on('dblclick', function() {
+        var row = $(this);
+        var rowIndex = $(this).index();
+        var info = model.areaInfo[rowIndex];
+        var template = require('../../template/admin/there-info-edit.hbs');
+        var html = template(info);
+
+        row.replaceWith(html);
+
+        addBtnRowEvents();
+    });
+}
+
+function addBtnRowEvents() {
+    $('.hta-btn-row').off('click');
+    $('.hta-btn-row').on('click', function() {
+        var row = $(this).parents('tr');
+        var rowIndex = row.index();
+        var info = model.areaInfo[rowIndex];
+
+        if ($(this).hasClass('hta-apply-row')) {
+            info.title = row.find('.hta-area-info-title').val().trim();
+            info.value = row.find('.hta-area-info-value').val().trim();
+        }
+        else if ($(this).hasClass('hta-remove-row')) {
+            _.remove(model.areaInfo, function(value, index) {
+                return rowIndex === index;
+            });
+
+            setAreaInfo();
+            return;
+        }
+        else if ($(this).hasClass('hta-up-row')) {
+            if (rowIndex < 1) {
+                return;
+            }
+
+            model.areaInfo = _.move(model.areaInfo, rowIndex, rowIndex - 1);
+
+            setAreaInfo();
+            return;
+        }
+        else if ($(this).hasClass('hta-down-row')) {
+            if (rowIndex >= model.areaInfo.length - 1) {
+                return;
+            }
+
+            model.areaInfo = _.move(model.areaInfo, rowIndex, rowIndex + 1);
+
+            setAreaInfo();
+            return;
+        }
+
+        var template = require('../../template/admin/there-info.hbs');
+        var html = template(info);
+        row.replaceWith(html);
+
+        addAreaInfoEvents();
+    });
 }
 
 function setTraffics() {
