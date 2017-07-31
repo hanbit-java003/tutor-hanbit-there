@@ -1,6 +1,7 @@
 require('../../less/admin/there-info-edit.less');
 
 var common = require('./common');
+var tab = require('./tab');
 
 $.ajax({
     url: '/api/admin/there/groups',

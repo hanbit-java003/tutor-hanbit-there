@@ -100,3 +100,33 @@ ul {
   top: 50%;
   transform: translateY(-50%);
 }
+
+.hta-tab-header {
+  border-bottom: solid 1px #ddd;
+}
+
+.hta-tab-header > li {
+  display: inline-block;
+  padding: 5px 15px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.hta-tab-header > li.active {
+  background-color: #3666c6;
+  color: #fff;
+  font-weight: bold;
+}
+
+.hta-tab-contents {
+  margin-bottom: 15px;
+}
+
+.hta-tab-contents > li {
+  display: none;
+  padding: 10px 0px;
+}
+
+.hta-tab-contents > li.active {
+  display: block;
+}
