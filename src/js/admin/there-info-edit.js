@@ -9,6 +9,7 @@ var params = new UrlSearchParams(location.search);
 var common = require('./common');
 var tab = require('./tab');
 
+var pageType = 'add';
 var validId = false;
 
 var groups = [];
@@ -119,6 +120,8 @@ $('.hta-save').on('click', function() {
     }
 
     for (var i=0; i<model.areaInfo.length; i++) {
+        delete model.areaInfo[i].no;
+
         if (!model.areaInfo[i].title) {
             alert('정보의 제목을 입력하세요.');
             return;
@@ -130,6 +133,8 @@ $('.hta-save').on('click', function() {
     }
 
     for (var i=0; i<model.traffics.length; i++) {
+        delete model.traffics[i].no;
+
         if (!model.traffics[i].icon) {
             alert('교통편의 아이콘을 입력하세요.');
             return;
@@ -144,7 +149,28 @@ $('.hta-save').on('click', function() {
         }
     }
 
-    console.log(model);
+    var url;
+
+    if (pageType === 'add') {
+        url = '/api/admin/there/add';
+    }
+    else if (pageType === 'edit') {
+        url = '/api/admin/there/' + model.id;
+    }
+
+    var formData = new FormData();
+    formData.append('json', JSON.stringify(model));
+
+    $.ajax({
+        url: url,
+        method: 'POST',
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function(result) {
+
+        }
+    });
 });
 
 function init() {
@@ -163,6 +189,7 @@ function init() {
         $('#hta-there-id').val(id);
         $('#hta-there-id').attr('disabled', true);
         $('.hta-check-duplicate').hide();
+        pageType = 'edit';
         validId = true;
     }
 
