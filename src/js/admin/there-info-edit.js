@@ -9,15 +9,25 @@ var params = new UrlSearchParams(location.search);
 var common = require('./common');
 var tab = require('./tab');
 
+var groups = [];
+
 var model = {
     location: {},
     areaInfo: [],
     traffics: []
 };
 
+// 개발용도로만 사용
+window.printModel = function() {
+    var json = JSON.stringify(model);
+    var obj = JSON.parse(json);
+    console.log(obj);
+};
+
 $.ajax({
     url: '/api/admin/there/groups',
     success: function(result) {
+        groups = result;
         var thereGroupItemsTemplate = require('../../template/admin/there-group-items.hbs');
         var thereGroupItemsHtml = thereGroupItemsTemplate(result);
 
@@ -25,6 +35,8 @@ $.ajax({
 
         $('#hta-there-group-select .dropdown-menu a').on('click', function(event) {
             common.addDropdownEvent(event, this);
+
+            model.groupId = $(this).attr('group-id');
         });
     }
 });
@@ -56,12 +68,98 @@ $('#hta-there-background').on('change', function() {
     fileReader.readAsDataURL(this.files[0]);
 });
 
-function init() {
-    var id = params.get('id');
+$('.hta-save').on('click', function() {
+    model.id = $('#hta-there-id').val().trim();
+    model.name = $('#hta-there-name').val().trim();
+    model.nameEn = $('#hta-there-name-en').val().trim();
+    model.timezone = $('#hta-there-timezone').val().trim();
+    model.summary = $('#hta-there-summary').val().trim();
+    model.location.lat = $('#hta-there-lat').val().trim();
+    model.location.lng = $('#hta-there-lng').val().trim();
 
-    $('#hta-there-id').val(id);
+    if (!model.groupId) {
+        alert('지역그룹을 선택하세요.');
+        return;
+    }
+    else if (!model.id) {
+        alert('지역ID를 입력하세요.');
+        $('#hta-there-id').focus();
+        return;
+    }
+    else if (!model.name) {
+        alert('지역명을 입력하세요.');
+        $('#hta-there-name').focus();
+        return;
+    }
+    else if (!model.nameEn) {
+        alert('영문지역명을 입력하세요.');
+        $('#hta-there-name-en').focus();
+        return;
+    }
+    else if (!model.timezone) {
+        alert('시간대를 입력하세요.');
+        $('#hta-there-timezone').focus();
+        return;
+    }
+    else if (!model.summary) {
+        alert('요약설명을 입력하세요.');
+        $('#hta-there-summary').focus();
+        return;
+    }
+    else if (!model.location.lat) {
+        alert('위도를 입력하세요.');
+        $('.hta-tab-header li[tab-id=location]').click();
+        $('#hta-there-lat').focus();
+        return;
+    }
+    else if (!model.location.lng) {
+        alert('경도를 입력하세요.');
+        $('.hta-tab-header li[tab-id=location]').click();
+        $('#hta-there-lng').focus();
+        return;
+    }
+
+    for (var i=0; i<model.areaInfo.length; i++) {
+        if (!model.areaInfo[i].title) {
+            alert('정보의 제목을 입력하세요.');
+            return;
+        }
+        else if (!model.areaInfo[i].value) {
+            alert('정보의 내용을 입력하세요.');
+            return;
+        }
+    }
+
+    for (var i=0; i<model.traffics.length; i++) {
+        if (!model.traffics[i].icon) {
+            alert('교통편의 아이콘을 입력하세요.');
+            return;
+        }
+        else if (!model.traffics[i].title) {
+            alert('교통편의 제목을 입력하세요.');
+            return;
+        }
+        else if (!model.traffics[i].contents) {
+            alert('교통편의 내용을 입력하세요.');
+            return;
+        }
+    }
+});
+
+function init() {
+    var group = _.find(groups, function(group) {
+        return group.id === model.groupId;
+    });
+
+    if (group) {
+        $('#hta-there-group-select .dropdown-title').html(group.name);
+        $('#hta-there-group-select .dropdown-toggle').attr('disabled', true);
+    }
+
+    var id = model.id;
 
     if (id) {
+        $('#hta-there-id').val(id);
         $('#hta-there-id').attr('disabled', true);
         $('.hta-check-duplicate').hide();
     }
