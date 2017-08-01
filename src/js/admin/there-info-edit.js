@@ -9,19 +9,14 @@ var params = new UrlSearchParams(location.search);
 var common = require('./common');
 var tab = require('./tab');
 
+var validId = false;
+
 var groups = [];
 
 var model = {
     location: {},
     areaInfo: [],
     traffics: []
-};
-
-// 개발용도로만 사용
-window.printModel = function() {
-    var json = JSON.stringify(model);
-    var obj = JSON.parse(json);
-    console.log(obj);
 };
 
 $.ajax({
@@ -86,6 +81,10 @@ $('.hta-save').on('click', function() {
         $('#hta-there-id').focus();
         return;
     }
+    else if (!validId) {
+        alert('지역ID 중복체크를 해주세요.');
+        return;
+    }
     else if (!model.name) {
         alert('지역명을 입력하세요.');
         $('#hta-there-name').focus();
@@ -144,6 +143,8 @@ $('.hta-save').on('click', function() {
             return;
         }
     }
+
+    console.log(model);
 });
 
 function init() {
@@ -162,6 +163,7 @@ function init() {
         $('#hta-there-id').val(id);
         $('#hta-there-id').attr('disabled', true);
         $('.hta-check-duplicate').hide();
+        validId = true;
     }
 
     $('#hta-there-name').val(model.name);
@@ -179,6 +181,41 @@ function init() {
 
     var thereTrafficTab = require('./there-traffic-tab');
     thereTrafficTab.init(model.traffics);
+
+    $('#hta-there-id').on('change', function() {
+        validId = false;
+    });
+
+    $('.hta-check-duplicate').on('click', function() {
+        var id = $('#hta-there-id').val().trim();
+
+        if (!id) {
+            alert('지역ID를 입력하세요.');
+            $('#hta-there-id').focus();
+            return;
+        }
+        else if (!/^[a-zA-Z][0-9a-zA-Z\-]{3,}$/.test(id)) {
+            alert('잘못된 ID형식입니다.');
+            $('#hta-there-id').focus();
+            return;
+        }
+
+        $.ajax({
+            url: '/api/admin/there/' + id,
+            method: 'OPTIONS',
+            success: function(result) {
+                if (!result.exists) {
+                    alert('사용할 수 있는 ID입니다.');
+                    validId = true;
+                }
+                else {
+                    alert('사용할 수 없는 ID입니다.');
+                    $('#hta-there-id').focus();
+                    validId = false;
+                }
+            }
+        });
+    });
 }
 
 if (!params.get('id')) {
