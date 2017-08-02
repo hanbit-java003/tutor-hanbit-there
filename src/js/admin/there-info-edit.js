@@ -96,6 +96,11 @@ $('.hta-save').on('click', function() {
         $('#hta-there-name-en').focus();
         return;
     }
+    else if (!model.background &&
+        $('#hta-there-background')[0].files.length === 0) {
+        alert('배경이미지를 선택하세요.');
+        return;
+    }
     else if (!model.timezone) {
         alert('시간대를 입력하세요.');
         $('#hta-there-timezone').focus();
@@ -161,6 +166,11 @@ $('.hta-save').on('click', function() {
     var formData = new FormData();
     formData.append('json', JSON.stringify(model));
 
+    var backgound = $('#hta-there-background')[0].files;
+    if (backgound.length > 0) {
+        formData.append('background', backgound[0]);
+    }
+
     $.ajax({
         url: url,
         method: 'POST',
@@ -195,6 +205,15 @@ function init() {
 
     $('#hta-there-name').val(model.name);
     $('#hta-there-name-en').val(model.nameEn);
+
+    if (model.background) {
+        $('#hta-there-background-preview')
+            .css({
+                'background-image': 'url(' + model.background + ')',
+                'height': '250px'
+            });
+    }
+
     $('#hta-there-timezone').val(model.timezone);
     $('#hta-there-summary').val(model.summary);
 
