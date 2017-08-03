@@ -178,7 +178,17 @@ $('.hta-save').on('click', function() {
         processData: false,
         data: formData,
         success: function(result) {
+            alert('정상적으로 저장되었습니다.');
 
+            if (pageType === 'add') {
+                location.href = location.href + '?id=' + model.id;
+            }
+            else if (pageType === 'edit') {
+                location.reload();
+            }
+        },
+        error: function() {
+            alert('저장 중 오류가 발생하였습니다.');
         }
     });
 });
