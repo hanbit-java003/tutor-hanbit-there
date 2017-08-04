@@ -193,6 +193,36 @@ $('.hta-save').on('click', function() {
     });
 });
 
+$('.hta-delete').on('click', function() {
+    common.openDialog({
+        body: '정말 삭제하시겠습니까?',
+        buttons: [{
+            id: 'delete',
+            name: '삭제',
+            style: 'danger'
+        }],
+        handler: function(btnId) {
+            if (btnId === 'delete') {
+                $.ajax({
+                    url: '/api/admin/there/' + model.id,
+                    method: 'DELETE',
+                    success: function() {
+                        alert('정상적으로 삭제되었습니다.');
+                        location.href = './there-info.html';
+                    },
+                    error: function() {
+                        alert('삭제 중 오류가 발생하였습니다.');
+                    }
+                });
+            }
+        }
+    });
+});
+
+$('.hta-cancel').on('click', function() {
+    history.back();
+});
+
 function init() {
     var group = _.find(groups, function(group) {
         return group.id === model.groupId;
@@ -211,6 +241,9 @@ function init() {
         $('.hta-check-duplicate').hide();
         pageType = 'edit';
         validId = true;
+    }
+    else {
+        $('.hta-delete').hide();
     }
 
     $('#hta-there-name').val(model.name);
