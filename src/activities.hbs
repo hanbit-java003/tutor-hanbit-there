@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{> template/title}}</title>
+</head>
+<body>
+{{> template/header search="true" }}
+<section class="ht-section-activity"
+         style="background-image: url(../img/theres/Guam.jpg)">
+    <div class="dark-layer">
+        <div class="ht-activity-name">괌 코코팜 가든 비치</div>
+        <div class="ht-activity-in">in Guam</div>
+    </div>
+</section>
+<section class="ht-section-info">
+    <div class="ht-section-contents">
+        <div class="ht-activity-info">
+            <div class="ht-tab">
+                <ul class="ht-tab-btns">
+                    <li class="active">Photo</li>
+                    <li>Video</li>
+                    <li>Map</li>
+                </ul>
+                <ul class="ht-tab-contents">
+                    <li class="active">
+                        <div class="ht-activity-photos ht-carousel">
+                            <ul class="ht-carousel-visible">
+                                <li style="background-color: red"></li>
+                            </ul>
+                            <ul class="ht-carousel-data">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="ht-activity-video">
+                        <div class="ht-activity-video-ready">
+                            준비중 입니다.
+                        </div>
+                    </li>
+                    <li>
+                        <div id="ht-activity-map"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ht-activity-booking">
+            예약
+        </div>
+    </div>
+</section>
+<section class="ht-section-activities">
+    <div class="ht-section-contents">
+        <div class="ht-activities-title">
+            Nearby Things to do
+        </div>
+        <ul class="ht-activities-list">
+        </ul>
+    </div>
+</section>
+{{> template/footer }}
+</body>
+</html>
