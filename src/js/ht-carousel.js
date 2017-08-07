@@ -53,7 +53,7 @@ function slide(direction) {
     carousel.find('li').animate({
         left: animationLeft
     }, {
-        duration: 400,
+        duration: 500,
         complete: function() {
             currentElement.remove();
             animating = false;
@@ -64,7 +64,7 @@ function slide(direction) {
 
             timer = setTimeout(function() {
                 slide('left');
-            }, 2000);
+            }, 3000);
         }
     });
 }
