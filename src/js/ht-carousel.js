@@ -1,14 +1,32 @@
-var slides = [{
-    color: 'red'
-}, {
-    color: 'green'
-}, {
-    color: 'blue'
-}];
+var slides = [];
 
-var carousel = $('.ht-activity-photos .ht-carousel-visible');
+var carousel;
 var currentSlideIndex = 0;
+var timer;
 var animating = false;
+
+var slideDuration = 500;
+var slideInterval = 3000;
+
+var createSlideElement;
+
+function init(carouselElement, _slides, _createSlideElement, options) {
+    carousel = carouselElement.find('.ht-carousel-visible');
+    slides = _slides;
+    createSlideElement = _createSlideElement;
+
+    if (options) {
+        slideDuration = options.slideDuration || slideDuration;
+        slideInterval = options.slideInterval || slideInterval;
+    }
+
+    var firstSlideElement = createSlideElement(slides[currentSlideIndex]);
+    carousel.append(firstSlideElement);
+
+    timer = setTimeout(function() {
+        slide('left');
+    }, slideInterval);
+}
 
 function slide(direction) {
     animating = true;
@@ -35,8 +53,8 @@ function slide(direction) {
     }
 
     var currentElement = carousel.find('li');
-    var nextElement = $('<li></li>');
-    nextElement.css('background-color', nextSlide.color);
+    var nextElement = createSlideElement(nextSlide);
+
     var animationLeft;
 
     if (direction === 'left') {
@@ -53,7 +71,7 @@ function slide(direction) {
     carousel.find('li').animate({
         left: animationLeft
     }, {
-        duration: 500,
+        duration: slideDuration,
         complete: function() {
             currentElement.remove();
             animating = false;
@@ -64,7 +82,7 @@ function slide(direction) {
 
             timer = setTimeout(function() {
                 slide('left');
-            }, 3000);
+            }, slideInterval);
         }
     });
 }
@@ -75,13 +93,13 @@ $('.ht-carousel-arrow').on('click', function() {
     }
 
     if ($(this).hasClass('left')) {
-        slide('left');
+        slide('right');
     }
     else if ($(this).hasClass('right')) {
-        slide('right');
+        slide('left');
     }
 });
 
-var timer = setTimeout(function() {
-    slide('left');
-}, 2000);
+module.exports = {
+    init: init
+};

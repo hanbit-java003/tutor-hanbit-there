@@ -15,6 +15,24 @@ var model = {
 }
 
 function initActivity(model) {
+    carousel.init($('.ht-activity-photos'),
+        [{
+            img: '../img/activities/guam-dolphin-cruise01.jpg'
+        }, {
+            img: '../img/activities/guam-dive-experience01.jpg'
+        }, {
+            img: '../img/activities/guam-cocopalm-garden-beach01.jpg'
+        }],
+        function(slide) {
+            var slideElement = $('<li></li>');
+            slideElement.css('background-image', 'url(' + slide.img + ')');
+
+            return slideElement;
+        }, {
+            slideDuration: 1000,
+            slideInterval: 5000
+        });
+
     if (model.video) {
         $('.ht-activity-video').html(model.video);
     }
