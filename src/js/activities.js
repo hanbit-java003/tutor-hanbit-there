@@ -7,6 +7,11 @@ var carousel = require('./ht-carousel');
 
 var model = {
     name: '괌 코코팜 가든 비치',
+    photos: [
+        '../img/activities/guam-dolphin-cruise01.jpg',
+        '../img/activities/guam-dive-experience01.jpg',
+        '../img/activities/guam-cocopalm-garden-beach01.jpg'
+    ],
     video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/w68Gr2Wd66I" frameborder="0" allowfullscreen></iframe>',
     location: {
         lat: 13.628359,
@@ -16,16 +21,10 @@ var model = {
 
 function initActivity(model) {
     carousel.init($('.ht-activity-photos'),
-        [{
-            img: '../img/activities/guam-dolphin-cruise01.jpg'
-        }, {
-            img: '../img/activities/guam-dive-experience01.jpg'
-        }, {
-            img: '../img/activities/guam-cocopalm-garden-beach01.jpg'
-        }],
+        model.photos,
         function(slide) {
             var slideElement = $('<li></li>');
-            slideElement.css('background-image', 'url(' + slide.img + ')');
+            slideElement.css('background-image', 'url(' + slide + ')');
 
             return slideElement;
         }, {
