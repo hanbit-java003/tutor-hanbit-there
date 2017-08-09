@@ -15,11 +15,11 @@
 <section class="ht-section-info">
     <div class="ht-section-contents">
         <div class="ht-activity-info">
-            <div class="ht-tab">
+            <div class="ht-activity-info-tab ht-tab">
                 <ul class="ht-tab-btns">
                     <li class="active">Photo</li>
                     <li>Video</li>
-                    <li>Map</li>
+                    <li tab-id="map">Map</li>
                 </ul>
                 <ul class="ht-tab-contents">
                     <li class="active">
@@ -53,9 +53,40 @@
                     </div>
                 </div>
             </div>
+            <div class="ht-activity-review-tab ht-tab">
+                <ul class="ht-tab-btns">
+                    <li class="active">이용후기 2</li>
+                    <li tab-id="reply">댓글 3</li>
+                </ul>
+                <ul class="ht-tab-contents">
+                    <li class="active"></li>
+                    <li></li>
+                </ul>
+            </div>
         </div>
         <div class="ht-activity-booking">
-            예약
+            <div class="ht-booking-header">
+                Booking
+            </div>
+            <div class="ht-booking-body">
+                <div class="ht-booking-calendar">
+                    <div class="ht-booking-calendar-title">
+                        이용 예정일
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <div class="ht-booking-calendar-datepicker">
+                        <div id="ht-datepicker"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ht-booking-footer">
+                <div class="ht-booking-carrier ht-booking-btn">
+                    캐리어에 담기
+                </div>
+                <div class="ht-booking-now ht-booking-btn">
+                    바로 구매하기
+                </div>
+            </div>
         </div>
     </div>
 </section>

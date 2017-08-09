@@ -1,4 +1,6 @@
 require('bootstrap');
+require('eonasdan-bootstrap-datetimepicker');
+require('eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css');
 require('../less/activities.less');
 
 var common = require('./common');
@@ -113,11 +115,6 @@ function initActivity(model) {
         console.error(error);
     });
 
-    tab.setCallback(2, function() {
-        $googleMaps.event.trigger(areaMap, 'resize');
-        areaMap.panTo(model.location);
-    });
-
     $('.ht-activity-intro-text').html(model.intro);
 
     var listTemplate = require('../template/activities/info-list.hbs');
@@ -127,6 +124,17 @@ function initActivity(model) {
 
         $('.ht-activity-info-text').append(listHtml);
     }
+
+    tab.setCallback(function(tabId) {
+        if (tabId === 'map') {
+            $googleMaps.event.trigger(areaMap, 'resize');
+            areaMap.panTo(model.location);
+        }
+    });
+
+    $('#ht-datepicker').datetimepicker({
+        inline: true
+    });
 }
 
 initActivity(model);
