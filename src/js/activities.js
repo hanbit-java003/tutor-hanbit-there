@@ -3,6 +3,8 @@ require('eonasdan-bootstrap-datetimepicker');
 require('eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css');
 require('../less/activities.less');
 
+var moment = require('moment');
+
 var common = require('./common');
 var tab = require('./ht-tab');
 var carousel = require('./ht-carousel');
@@ -133,7 +135,14 @@ function initActivity(model) {
     });
 
     $('#ht-datepicker').datetimepicker({
-        inline: true
+        inline: true,
+        locale: 'ko',
+        dayViewHeaderFormat: 'YYYY년 MMMM',
+        format: 'YYYYMMDD',
+        useCurrent: false,
+        minDate: moment().add(1, 'days').startOf('day'),
+        maxDate: moment().add(2, 'months').endOf('month'),
+        disabledDates: ['20170815']
     });
 }
 
