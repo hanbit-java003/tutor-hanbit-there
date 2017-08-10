@@ -1,9 +1,22 @@
+var htOption = require('./ht-option');
+
+$('body').on('click', function(event) {
+    var target = $(event.target);
+
+    if (target.closest('.ht-option-control').length > 0) {
+        htOption.handler(target);
+    }
+    else {
+        htOption.closeAll();
+    }
+});
+
 $.ajax({
     url: '/api/menu/json',
     success: function(result) {
         initMenu(result);
     }
-})
+});
 
 function initMenu(menus) {
     var template = require('../template/header-menu.hbs');
