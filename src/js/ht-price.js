@@ -1,4 +1,5 @@
 var models = {};
+var updateListener;
 
 function priceControlHandler(target) {
     var priceControl = target.parents('.ht-price-control');
@@ -39,6 +40,10 @@ function updatePriceBox(modelId) {
 
     priceCount.text(model.count);
     price.text('₩' + (model.price * model.count).toLocaleString());
+
+    if (typeof updateListener === 'function') {
+        updateListener();
+    }
 }
 
 function setModel(id, model) {
@@ -54,5 +59,12 @@ function getModel(id) {
 module.exports = {
     handler: priceControlHandler,
     setModel: setModel,
-    getModel: getModel
+    getModel: getModel,
+    setUpdateListener: function(listener) {
+        if (typeof listener !== 'function') {
+            return;
+        }
+
+        updateListener = listener;
+    }
 };

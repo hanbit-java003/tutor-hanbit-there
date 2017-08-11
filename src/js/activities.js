@@ -154,6 +154,26 @@ function initActivity(model) {
     $('#ht-booking-option-1 .ht-options > li').on('click', function() {
         $('.ht-price-box').removeClass('disabled');
 
+        htPrice.setUpdateListener(function() {
+            var total = 0;
+            var modelIds = ['adult', 'kid', 'baby'];
+
+            modelIds.forEach(function(modelId) {
+                var model = htPrice.getModel(modelId);
+
+                if (!model) {
+                    return;
+                }
+
+                total += model.count * model.price;
+            });
+
+            var point = parseInt(total * 0.02);
+
+            $('.ht-booking-price-total .total').text('₩' + total.toLocaleString());
+            $('.ht-booking-price-point .point').html(point.toLocaleString() + '<span>P</span>');
+        });
+
         htPrice.setModel('adult', {
             count: 1,
             price: 32340
