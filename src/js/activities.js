@@ -8,6 +8,7 @@ var moment = require('moment');
 var common = require('./common');
 var tab = require('./ht-tab');
 var carousel = require('./ht-carousel');
+var htPrice = require('./ht-price');
 
 var model = {
     name: '괌 코코팜 가든 비치',
@@ -143,6 +144,19 @@ function initActivity(model) {
         minDate: moment().add(1, 'days').startOf('day'),
         maxDate: moment().add(2, 'months').endOf('month'),
         disabledDates: ['20170815']
+    });
+
+    htPrice.setModel('adult', {
+        count: 1,
+        price: 32340
+    });
+    htPrice.setModel('kid', {
+        count: 0,
+        price: 12540
+    });
+    htPrice.setModel('baby', {
+        count: 0,
+        price: 0
     });
 }
 

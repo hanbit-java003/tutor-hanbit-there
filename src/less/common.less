@@ -364,6 +364,7 @@ footer {
 
 .ht-option-selectbox {
   position: relative;
+  margin: 5px 0px;
   padding: 8px 24px 8px 8px;
   border: solid 1px #ddd;
   white-space: nowrap;
@@ -398,4 +399,48 @@ footer {
 
 .ht-options > li:hover {
   background-color: #eee;
+}
+
+.ht-price-control {
+  position: relative;
+}
+
+.ht-price-control > label {
+  font-size: 11px;
+}
+
+.ht-price-box {
+  position: relative;
+  margin: 5px 0px;
+  padding: 8px 60px 8px 8px;
+  border: solid 1px #ddd;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ht-price-box span {
+  color: @main-color;
+}
+
+.ht-price-btns {
+  position: absolute;
+  top: 8px;
+  right: 0px;
+}
+
+.ht-price-btns > li {
+  display: inline-block;
+  padding: 0px 8px;
+  border-right: solid 1px #ddd;
+  color: #bbb;
+  cursor: pointer;
+}
+
+.ht-price-btns > li:last-child {
+  border-right: 0;
+}
+
+.ht-price-btns > li:hover {
+  color: @main-color;
 }

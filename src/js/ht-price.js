@@ -1,0 +1,51 @@
+var models = {};
+
+function priceControlHandler(target) {
+    var modelId = target.parents('.ht-price-control').attr('model-id');
+
+    if (!models[modelId]) {
+        return;
+    }
+
+    var model = models[modelId];
+
+    if (target.hasClass('ht-price-count-plus')) {
+        model.count = Math.min(model.maxCount || 50, model.count + 1);
+    }
+    else if (target.hasClass('ht-price-count-minus')) {
+        model.count = Math.max(model.minCount || 0, model.count - 1);
+    }
+
+    updatePriceBox(modelId);
+}
+
+function updatePriceBox(modelId) {
+    var priceBox = $('.ht-price-control[model-id=' + modelId + '] .ht-price-box');
+    var model = models[modelId];
+
+    if (priceBox.length < 1 || !model) {
+        return;
+    }
+
+    var priceCount = priceBox.find('.ht-price-count');
+    var price = priceBox.find('.ht-price');
+
+    priceCount.text(model.count);
+    price.text('₩' + (model.price * model.count).toLocaleString());
+}
+
+function setModel(id, model) {
+    models[id] = model;
+
+    updatePriceBox(id);
+}
+
+function getModel(id) {
+    return models[id];
+}
+
+module.exports = {
+    handler: priceControlHandler,
+    setModel: setModel,
+    getModel: getModel
+};

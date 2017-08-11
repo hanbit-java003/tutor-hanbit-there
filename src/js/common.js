@@ -1,10 +1,14 @@
 var htOption = require('./ht-option');
+var htPrice = require('./ht-price');
 
 $('body').on('click', function(event) {
     var target = $(event.target);
 
     if (target.closest('.ht-option-control').length > 0) {
         htOption.handler(target);
+    }
+    else if (target.closest('.ht-price-btn').length > 0) {
+        htPrice.handler(target.closest('.ht-price-btn'));
     }
     else {
         htOption.closeAll();
