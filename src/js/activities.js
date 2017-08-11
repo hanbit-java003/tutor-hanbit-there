@@ -146,17 +146,26 @@ function initActivity(model) {
         disabledDates: ['20170815']
     });
 
-    htPrice.setModel('adult', {
-        count: 1,
-        price: 32340
+    $('#ht-datepicker').on('dp.change', function(event) {
+        $('.ht-booking-datepick-msg').hide();
+        $('.ht-booking-options-box').show();
     });
-    htPrice.setModel('kid', {
-        count: 0,
-        price: 12540
-    });
-    htPrice.setModel('baby', {
-        count: 0,
-        price: 0
+
+    $('#ht-booking-option-1 .ht-options > li').on('click', function() {
+        $('.ht-price-box').removeClass('disabled');
+
+        htPrice.setModel('adult', {
+            count: 1,
+            price: 32340
+        });
+        htPrice.setModel('kid', {
+            count: 0,
+            price: 12540
+        });
+        htPrice.setModel('baby', {
+            count: 0,
+            price: 0
+        });
     });
 }
 

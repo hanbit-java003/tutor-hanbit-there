@@ -1,7 +1,14 @@
 var models = {};
 
 function priceControlHandler(target) {
-    var modelId = target.parents('.ht-price-control').attr('model-id');
+    var priceControl = target.parents('.ht-price-control');
+    var priceBox = priceControl.find('.ht-price-box');
+
+    if (priceBox.hasClass('disabled')) {
+        return;
+    }
+
+    var modelId = priceControl.attr('model-id');
 
     if (!models[modelId]) {
         return;

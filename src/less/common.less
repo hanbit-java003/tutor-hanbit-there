@@ -419,10 +419,6 @@ footer {
   overflow: hidden;
 }
 
-.ht-price-box span {
-  color: @main-color;
-}
-
 .ht-price-btns {
   position: absolute;
   top: 8px;
@@ -434,13 +430,26 @@ footer {
   padding: 0px 8px;
   border-right: solid 1px #ddd;
   color: #bbb;
-  cursor: pointer;
 }
 
 .ht-price-btns > li:last-child {
   border-right: 0;
 }
 
-.ht-price-btns > li:hover {
-  color: @main-color;
+.ht-price-box:not(.disabled) {
+  span {
+    color: @main-color;
+  }
+
+  .ht-price-btns > li {
+    cursor: pointer;
+  }
+
+  .ht-price-btns > li:hover {
+    color: @main-color;
+  }
+}
+
+.ht-price-box.disabled {
+  color: #ddd;
 }
