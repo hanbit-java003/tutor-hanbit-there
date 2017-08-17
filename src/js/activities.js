@@ -10,9 +10,9 @@ var tab = require('./ht-tab');
 var carousel = require('./ht-carousel');
 var htPrice = require('./ht-price');
 
-var model = {
+/*var model = {
     name: '괌 코코팜 가든 비치',
-    group: {
+    there: {
         nameEn: 'Guam',
         background: '/api/file/there-Guam'
     },
@@ -69,13 +69,13 @@ var model = {
             text: '상품 이용 당일 취소나 불참(NO-SHOW)시에도 역시 환불이 불가합니다.'
         }]
     }]
-}
+};*/
 
 function initActivity(model) {
     $('.ht-activity-name').html(model.name);
-    $('.ht-activity-in').html('in ' + model.group.nameEn);
+    $('.ht-activity-in').html('in ' + model.there.nameEn);
     $('.ht-section-activity').css('background-image',
-        'url(' + model.group.background + ')');
+        'url(' + model.there.background + ')');
 
     carousel.init($('.ht-activity-photos'),
         model.photos,
@@ -189,4 +189,13 @@ function initActivity(model) {
     });
 }
 
-initActivity(model);
+function init(id) {
+    $.ajax({
+        url: '/api/activity/' + id,
+        success: function(result) {
+            initActivity(result);
+        }
+    });
+}
+
+init('guam-cocopalm-garden-beach');
