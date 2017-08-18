@@ -19,7 +19,9 @@
         {{/if}}">
             <div class="hta-menu">액티비티관리</div>
             <ul class="hta-sub-menu">
-                <li>액티비티관리</li>
+                <li link="activity"{{#if activity}}
+                    class="active"
+                {{/if}}>액티비티관리</li>
             </ul>
         </div>
         <div class="hta-menu-group{{#if group-member}}

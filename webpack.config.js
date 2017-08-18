@@ -34,6 +34,9 @@ const pages = [{
 }, {
     html: 'admin/there-info-edit',
     script: 'admin/there-info-edit',
+}, {
+    html: 'admin/activity',
+    script: 'admin/activity',
 }];
 
 module.exports = {
