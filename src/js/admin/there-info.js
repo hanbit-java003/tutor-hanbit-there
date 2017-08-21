@@ -1,9 +1,9 @@
 require('../../less/admin/there-info.less');
-var _ = require('lodash');
-var hangul = require('hangul-js');
 
 var common = require('./common');
-var search = require('./search');
+
+var Search = require('./search');
+var search = new Search($('#hta-there-search-input'), setList);
 
 $('.hta-add-there').on('click', function() {
     location.href = './there-info-edit.html';
@@ -33,7 +33,7 @@ function requestList(groupId) {
             groupId: groupId
         },
         success: function(result) {
-            search.init($('#hta-there-search-input'), result, setList);
+            search.updateList(result);
         }
     });
 }

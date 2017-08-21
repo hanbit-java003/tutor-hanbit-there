@@ -1,9 +1,9 @@
 require('../../less/admin/activity.less');
-var _ = require('lodash');
-var hangul = require('hangul-js');
 
 var common = require('./common');
-var search = require('./search');
+
+var Search = require('./search');
+var search = new Search($('#hta-activity-search-input'), setList);
 
 $.ajax({
     url: '/api/admin/there/groups',
@@ -52,7 +52,7 @@ function requestList(thereId) {
     $.ajax({
         url: '/api/admin/' + thereId + '/activities',
         success: function(result) {
-            search.init($('#hta-activity-search-input'), result, setList);
+            search.updateList(result);
         }
     });
 }
