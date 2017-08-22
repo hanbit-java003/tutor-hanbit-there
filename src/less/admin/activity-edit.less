@@ -29,3 +29,38 @@
 #hta-activity-photos {
   display: none;
 }
+
+.table {
+  th {
+    white-space: nowrap;
+
+    &:first-child {
+      width: 50px;
+    }
+
+    &:last-child {
+      width: 150px;
+    }
+  }
+
+  td input[type=text] {
+    width: 100%;
+  }
+}
+
+.form-group {
+  position: relative;
+}
+
+.hta-add-row {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  background-color: #3666c6;
+  line-height: 24px;
+  border: 0;
+  border-radius: 12px;
+}
