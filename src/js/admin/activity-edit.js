@@ -7,6 +7,7 @@ var common = require('./common');
 
 var model = {};
 var validId = false;
+var photos = [];
 
 $.ajax({
     url: '/api/admin/there/groups',
@@ -51,6 +52,38 @@ function requestTheres(groupId) {
         }
     });
 }
+
+$('#hta-activity-photos').on('change', function() {
+    if (this.files.length === 0) {
+        return;
+    }
+
+    for (var i=0; i<this.files.length; i++) {
+        var file = this.files[i];
+
+        if (!file.type.startsWith('image/')) {
+            continue;
+        }
+
+        photos.push(file);
+
+        var fileReader = new FileReader();
+
+        fileReader.onload = function(event) {
+            var preview = $('<li></li>');
+
+            preview.css({
+                'background-image': 'url(' + event.target.result + ')',
+                'width': '50px',
+                'height': '50px'
+            });
+
+            $('.hta-photos').append(preview);
+        };
+
+        fileReader.readAsDataURL(file);
+    }
+});
 
 $('#hta-activity-id').on('change', function() {
     validId = false;
