@@ -5,6 +5,10 @@ var common = require('./common');
 var Search = require('./search');
 var search = new Search($('#hta-activity-search-input'), setList);
 
+$('.hta-add-activity').on('click', function() {
+    location.href = './activity-edit.html';
+});
+
 $.ajax({
     url: '/api/admin/there/groups',
     success: function(result) {
@@ -66,6 +70,6 @@ function setList(activities) {
     $('.hta-activity-list > li').on('click', function() {
         var activityId = $(this).attr('activity-id');
 
-        //location.href = './activity-edit.html?id=' + activityId;
+        location.href = './activity-edit.html?id=' + activityId;
     });
 }

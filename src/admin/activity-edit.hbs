@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HT Admin</title>
+</head>
+<body>
+{{> ../../template/admin/menu group-activity="true" activity="true"}}
+<div class="admin-contents">
+    <div class="hta-title">액티비티 관리</div>
+    <div class="form-group sm">
+        <label for="hta-there-group-id">지역그룹ID</label>
+        <div id="hta-there-group-select" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dropdown-title">지역그룹</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+            </ul>
+        </div>
+    </div>
+    <div class="form-group sm">
+        <label for="hta-there-id">지역ID</label>
+        <div id="hta-there-select" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dropdown-title">지역</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+            </ul>
+        </div>
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-id">액티비티ID</label>
+        <button class="hta-check-duplicate btn btn-warning btn-xs">중복확인</button>
+        <input type="text" class="form-control" id="hta-activity-id" placeholder="액티비티ID">
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-name">액티비티명</label>
+        <input type="text" class="form-control" id="hta-activity-name" placeholder="액티비티명">
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-photos">사진</label>
+        <input type="file" id="hta-activity-photos" accept="image/*" multiple>
+        <button for="hta-activity-photos" class="hta-file-select btn btn-default">파일선택</button>
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-video">비디오</label>
+        <input type="text" class="form-control" id="hta-activity-video" placeholder="비디오 TAG">
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-lat">위도</label>
+        <input type="text" class="form-control" id="hta-activity-lat" placeholder="위도">
+    </div>
+    <div class="form-group sm">
+        <label for="hta-activity-lng">경도</label>
+        <input type="text" class="form-control" id="hta-activity-lng" placeholder="경도">
+    </div>
+    <div class="form-group">
+        <label for="hta-activity-intro">소개</label>
+        <textarea class="form-control" id="hta-activity-intro" placeholder="소개"></textarea>
+    </div>
+</div>
+</body>
+</html>
