@@ -1,11 +1,16 @@
 require('../../less/admin/activity-edit.less');
 
+var _ = require('lodash');
+_.move = require('lodash-move').default;
+
 var UrlSearchParams = require('url-search-params');
 var params = new UrlSearchParams(location.search);
 
 var common = require('./common');
 
-var model = {};
+var model = {
+    lists: []
+};
 var validId = false;
 var photos = [];
 
@@ -119,3 +124,94 @@ $('.hta-check-duplicate').on('click', function() {
         }
     });
 });
+
+$('.hta-activity-info-list .hta-add-row').on('click', function() {
+    model.lists.push({
+        title: '제목',
+        type: 'dot',
+        items: []
+    });
+
+    setInfoLists();
+});
+
+function setInfoLists() {
+    $('.hta-activity-info tbody').empty();
+
+    var template = require('../../template/admin/activity-info.hbs');
+
+    for (var i=0; i<model.lists.length; i++) {
+        model.lists[i].no = i + 1;
+
+        var html = template(model.lists[i]);
+
+        $('.hta-activity-info tbody').append(html);
+    }
+
+    addInfoListsEvents();
+}
+
+function addInfoListsEvents() {
+    addBtnRowEvents();
+
+    $('.hta-activity-info tbody tr').off('dblclick');
+    $('.hta-activity-info tbody tr').on('dblclick', function() {
+        var row = $(this);
+        var rowIndex = $(this).index();
+        var info = model.lists[rowIndex];
+        var template = require('../../template/admin/activity-info-edit.hbs');
+        var html = template(info);
+
+        row.replaceWith(html);
+
+        addBtnRowEvents();
+    });
+}
+
+function addBtnRowEvents() {
+    $('.hta-activity-info .hta-btn-row').off('click');
+    $('.hta-activity-info .hta-btn-row').on('click', function() {
+        var row = $(this).parents('tr');
+        var rowIndex = row.index();
+        var info = model.lists[rowIndex];
+
+        if ($(this).hasClass('hta-apply-row')) {
+            info.title = row.find('.hta-activity-info-title').val().trim();
+            info.type = row.find('.hta-activity-info-type').val().trim();
+        }
+        else if ($(this).hasClass('hta-remove-row')) {
+            _.remove(model.lists, function(value, index) {
+                return rowIndex === index;
+            });
+
+            setInfoLists();
+            return;
+        }
+        else if ($(this).hasClass('hta-up-row')) {
+            if (rowIndex < 1) {
+                return;
+            }
+
+            model.lists = _.move(model.lists, rowIndex, rowIndex - 1);
+
+            setInfoLists();
+            return;
+        }
+        else if ($(this).hasClass('hta-down-row')) {
+            if (rowIndex >= model.lists.length - 1) {
+                return;
+            }
+
+            model.lists = _.move(model.lists, rowIndex, rowIndex + 1);
+
+            setInfoLists();
+            return;
+        }
+
+        var template = require('../../template/admin/activity-info.hbs');
+        var html = template(info);
+        row.replaceWith(html);
+
+        addInfoListsEvents();
+    });
+}
