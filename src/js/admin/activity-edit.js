@@ -166,11 +166,26 @@ function addInfoListsEvents() {
 
         addBtnRowEvents();
     });
+
+    $('.hta-activity-info tbody tr').off('click');
+    $('.hta-activity-info tbody tr').on('click', function() {
+        $('.hta-activity-info tbody tr').removeClass('selected');
+        $(this).addClass('selected');
+
+        var index = $(this).index();
+
+        require('./activity-info-items')
+            .init(model.lists[index].items, function(itemCount) {
+                $('.hta-activity-info tbody tr.selected .hta-item-count').text(itemCount);
+            });
+    });
 }
 
 function addBtnRowEvents() {
     $('.hta-activity-info .hta-btn-row').off('click');
     $('.hta-activity-info .hta-btn-row').on('click', function() {
+        $('.hta-activity-info-item-list').hide();
+
         var row = $(this).parents('tr');
         var rowIndex = row.index();
         var info = model.lists[rowIndex];
