@@ -58,8 +58,9 @@ function requestTheres(groupId) {
     });
 }
 
-function addPreview(url) {
+function addPreview(url, saved) {
     var preview = $('<li><div class="hta-photo-remove">X</div></li>');
+    preview.attr('saved', saved);
 
     preview.css({
         'background-image': 'url(' + url + ')',
@@ -68,6 +69,24 @@ function addPreview(url) {
     });
 
     $('.hta-photos').append(preview);
+
+    $('.hta-photos > li:last-child .hta-photo-remove').on('click', function() {
+        var photo = $(this).parent('li');
+
+        var saved = photo.attr('saved') === 'true';
+        var savedPhotoCount = model.photos ? model.photos.length : 0
+
+        var index = saved ? photo.index() : photo.index() - savedPhotoCount;
+
+        if (saved) {
+            model.photos[index] = '_removed_';
+            photo.hide();
+        }
+        else {
+            photos.splice(index, 1);
+            photo.remove();
+        }
+    });
 }
 
 $('#hta-activity-photos').on('change', function() {
@@ -87,7 +106,7 @@ $('#hta-activity-photos').on('change', function() {
         var fileReader = new FileReader();
 
         fileReader.onload = function(event) {
-            addPreview(event.target.result);
+            addPreview(event.target.result, false);
         };
 
         fileReader.readAsDataURL(file);
@@ -237,6 +256,68 @@ function addBtnRowEvents() {
     });
 }
 
+$('.hta-save').on('click', function() {
+    model.id = $('#hta-activity-id').val().trim();
+    model.name = $('#hta-activity-name').val().trim();
+    model.video = $('#hta-activity-video').val().trim();
+    model.location = {
+        lat: $('#hta-activity-lat').val().trim(),
+        lng: $('#hta-activity-lng').val().trim()
+    };
+    model.intro = $('#hta-activity-intro').val().trim();
+
+    if (!model.thereId) {
+        alert('지역을 선택하세요.');
+        return;
+    }
+    else if (!model.id) {
+        alert('액티비티ID를 입력하세요.');
+        $('#hta-activity-id').focus();
+        return;
+    }
+    else if (!validId) {
+        alert('액티비티ID 중복확인을 해주세요.');
+        $('#hta-activity-id').focus();
+        return;
+    }
+    else if (!model.name) {
+        alert('액티비티명을 입력하세요.');
+        $('#hta-activity-name').focus();
+        return;
+    }
+    else if (!photos.length && !_.filter(model.photos, function(value) {
+            return value !== '_removed_';
+        }).length) {
+        alert('사진을 한개 이상 추가하세요.');
+        return;
+    }
+    else if (!model.location.lat) {
+        alert('위도를 입력하세요.');
+        $('#hta-activity-lat').focus();
+        return;
+    }
+    else if (!model.location.lng) {
+        alert('경도를 입력하세요.');
+        $('#hta-activity-lng').focus();
+        return;
+    }
+    else if (!model.intro) {
+        alert('소개를 입력하세요.');
+        $('#hta-activity-intro').focus();
+        return;
+    }
+});
+
+$('.hta-cancel').on('click', function() {
+    history.back();
+});
+
+function addDeleteEvent() {
+    $('.hta-delete').on('click', function() {
+        // TODO 삭제처리
+    });
+}
+
 function init() {
     if (model.id) {
         $('#hta-there-group-select button').attr('disabled', true);
@@ -247,8 +328,12 @@ function init() {
         $('#hta-activity-id').attr('disabled', true);
         $('.hta-check-duplicate').hide();
         validId = true;
+
+        addDeleteEvent();
     }
     else {
+        $('.hta-delete').hide();
+
         addCheckDuplicateEvent();
     }
 
@@ -256,7 +341,7 @@ function init() {
 
     if (model.photos) {
         model.photos.forEach(function(url) {
-            addPreview(url);
+            addPreview(url, true);
         });
     }
 
