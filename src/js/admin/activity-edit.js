@@ -306,6 +306,29 @@ $('.hta-save').on('click', function() {
         $('#hta-activity-intro').focus();
         return;
     }
+
+    var formData = new FormData();
+    formData.append('model', JSON.stringify(model));
+
+    photos.forEach(function(photo) {
+        formData.append('photos', photo);
+    });
+
+    $.ajax({
+        url: '/api/admin/activity/' + model.id,
+        method: 'POST',
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function(result) {
+            alert('정상적으로 저장되었습니다.');
+
+            location.href = './activity-edit.html?id=' + model.id;
+        },
+        error: function() {
+            alert('저장 중 오류가 발생하였습니다.');
+        }
+    });
 });
 
 $('.hta-cancel').on('click', function() {
