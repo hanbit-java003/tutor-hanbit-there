@@ -58,6 +58,18 @@ function requestTheres(groupId) {
     });
 }
 
+function addPreview(url) {
+    var preview = $('<li><div class="hta-photo-remove">X</div></li>');
+
+    preview.css({
+        'background-image': 'url(' + url + ')',
+        'width': '50px',
+        'height': '50px'
+    });
+
+    $('.hta-photos').append(preview);
+}
+
 $('#hta-activity-photos').on('change', function() {
     if (this.files.length === 0) {
         return;
@@ -75,15 +87,7 @@ $('#hta-activity-photos').on('change', function() {
         var fileReader = new FileReader();
 
         fileReader.onload = function(event) {
-            var preview = $('<li></li>');
-
-            preview.css({
-                'background-image': 'url(' + event.target.result + ')',
-                'width': '50px',
-                'height': '50px'
-            });
-
-            $('.hta-photos').append(preview);
+            addPreview(event.target.result);
         };
 
         fileReader.readAsDataURL(file);
@@ -94,36 +98,38 @@ $('#hta-activity-id').on('change', function() {
     validId = false;
 });
 
-$('.hta-check-duplicate').on('click', function() {
-    var id = $('#hta-activity-id').val().trim();
+function addCheckDuplicateEvent() {
+    $('.hta-check-duplicate').on('click', function() {
+        var id = $('#hta-activity-id').val().trim();
 
-    if (!id) {
-        alert('액티비티ID를 입력하세요.');
-        $('#hta-activity-id').focus();
-        return;
-    }
-    else if (!/^[a-zA-Z][0-9a-zA-Z\-]{3,}$/.test(id)) {
-        alert('잘못된 ID형식입니다.');
-        $('#hta-activity-id').focus();
-        return;
-    }
-
-    $.ajax({
-        url: '/api/admin/activity/' + id,
-        method: 'OPTIONS',
-        success: function(result) {
-            if (!result.exists) {
-                alert('사용할 수 있는 ID입니다.');
-                validId = true;
-            }
-            else {
-                alert('사용할 수 없는 ID입니다.');
-                $('#hta-activity-id').focus();
-                validId = false;
-            }
+        if (!id) {
+            alert('액티비티ID를 입력하세요.');
+            $('#hta-activity-id').focus();
+            return;
         }
+        else if (!/^[a-zA-Z][0-9a-zA-Z\-]{3,}$/.test(id)) {
+            alert('잘못된 ID형식입니다.');
+            $('#hta-activity-id').focus();
+            return;
+        }
+
+        $.ajax({
+            url: '/api/admin/activity/' + id,
+            method: 'OPTIONS',
+            success: function(result) {
+                if (!result.exists) {
+                    alert('사용할 수 있는 ID입니다.');
+                    validId = true;
+                }
+                else {
+                    alert('사용할 수 없는 ID입니다.');
+                    $('#hta-activity-id').focus();
+                    validId = false;
+                }
+            }
+        });
     });
-});
+}
 
 $('.hta-activity-info-list .hta-add-row').on('click', function() {
     model.lists.push({
@@ -228,5 +234,49 @@ function addBtnRowEvents() {
         row.replaceWith(html);
 
         addInfoListsEvents();
+    });
+}
+
+function init() {
+    if (model.id) {
+        $('#hta-there-group-select button').attr('disabled', true);
+        $('#hta-there-select button').attr('disabled', true);
+        $('#hta-there-select .dropdown-title').text(model.thereId);
+
+        $('#hta-activity-id').val(model.id);
+        $('#hta-activity-id').attr('disabled', true);
+        $('.hta-check-duplicate').hide();
+        validId = true;
+    }
+    else {
+        addCheckDuplicateEvent();
+    }
+
+    $('#hta-activity-name').val(model.name);
+
+    if (model.photos) {
+        model.photos.forEach(function(url) {
+            addPreview(url);
+        });
+    }
+
+    $('#hta-activity-video').val(model.video);
+    $('#hta-activity-lat').val(model.location.lat);
+    $('#hta-activity-lng').val(model.location.lng);
+    $('#hta-activity-intro').val(model.intro);
+
+    setInfoLists();
+}
+
+if (!params.get('id')) {
+    init();
+}
+else {
+    $.ajax({
+        url: '/api/activity/' + params.get('id'),
+        success: function(result) {
+            model = result;
+            init();
+        }
     });
 }
