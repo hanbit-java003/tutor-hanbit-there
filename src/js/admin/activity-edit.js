@@ -307,6 +307,22 @@ $('.hta-save').on('click', function() {
         return;
     }
 
+    if (model.lists) {
+        model.lists.forEach(function(list) {
+            delete list.no;
+
+            if (!list.items) {
+                return;
+            }
+
+            list.items.forEach(function(item) {
+                delete item.no;
+            });
+        });
+    }
+
+    delete model.there;
+
     var formData = new FormData();
     formData.append('model', JSON.stringify(model));
 
@@ -315,7 +331,7 @@ $('.hta-save').on('click', function() {
     });
 
     $.ajax({
-        url: '/api/admin/activity/' + model.id,
+        url: '/api/admin/activity/save',
         method: 'POST',
         contentType: false,
         processData: false,
@@ -344,8 +360,9 @@ function addDeleteEvent() {
 function init() {
     if (model.id) {
         $('#hta-there-group-select button').attr('disabled', true);
+        $('#hta-there-group-select .dropdown-title').text(model.there.groupId);
         $('#hta-there-select button').attr('disabled', true);
-        $('#hta-there-select .dropdown-title').text(model.thereId);
+        $('#hta-there-select .dropdown-title').text(model.there.name);
 
         $('#hta-activity-id').val(model.id);
         $('#hta-activity-id').attr('disabled', true);
