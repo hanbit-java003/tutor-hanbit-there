@@ -9,6 +9,7 @@ var params = new UrlSearchParams(location.search);
 var common = require('./common');
 
 var model = {
+    location: {},
     lists: []
 };
 var validId = false;
