@@ -91,18 +91,101 @@ $('.header-btn-member').on('click', function() {
     }, {
         duration: 500,
         complete: function() {
+            $('#ht-sign-in').on('click', function() {
+                signIn();
+            });
+
+            $('#ht-sign-up').on('click', function() {
+                signUp();
+            });
+
             $('.overlay-layer').on('click', function() {
-                $('.ht-member-layer').animate({
-                   right: '-333px'
-                }, {
-                    duration: 500,
-                    complete: function() {
-                        $('.ht-member-layer').remove();
-                        $('.overlay-layer').remove();
-                        $('body').css('overflow', 'auto');
-                    }
-                });
+                closeMemberLayer();
             });
         }
     });
 });
+
+function signIn() {
+    var email = $('#ht-sign-in-email').val().trim();
+    var password = $('#ht-sign-in-password').val().trim();
+    var remember = $('#ht-sign-in-remember').prop('checked');
+
+    if (!email) {
+        alert('이메일을 입력하세요.');
+        $('#ht-sign-in-email').focus();
+        return;
+    }
+    else if (!password) {
+        alert('비밀번호를 입력하세요.');
+        $('#ht-sign-in-password').focus();
+        return;
+    }
+
+    $.ajax({
+        url: '/api/member/signin',
+        method: 'POST',
+        data: {
+            email: email,
+            password: password,
+            remember: remember
+        },
+        success: function(result) {
+            alert('반갑습니다.');
+            closeMemberLayer();
+        },
+        error: function(jqXHR) {
+            alert(jqXHR.responseJSON.message);
+        }
+    })
+}
+
+function signUp() {
+    var email = $('#ht-sign-up-email').val().trim();
+    var password = $('#ht-sign-up-password').val().trim();
+    var agree = $('#ht-sign-up-agree').prop('checked');
+
+    if (!email) {
+        alert('이메일을 입력하세요.');
+        $('#ht-sign-up-email').focus();
+        return;
+    }
+    else if (!password) {
+        alert('비밀번호를 입력하세요.');
+        $('#ht-sign-up-password').focus();
+        return;
+    }
+    else if (!agree) {
+        alert('약관에 동의하셔야 합니다.');
+        return;
+    }
+
+    $.ajax({
+        url: '/api/member/signup',
+        method: 'POST',
+        data: {
+            email: email,
+            password: password
+        },
+        success: function(result) {
+            alert('정상적으로 가입되셨습니다.');
+            closeMemberLayer();
+        },
+        error: function(jqXHR) {
+            alert(jqXHR.responseJSON.message);
+        }
+    });
+}
+
+function closeMemberLayer() {
+    $('.ht-member-layer').animate({
+        right: '-333px'
+    }, {
+        duration: 500,
+        complete: function() {
+            $('.ht-member-layer').remove();
+            $('.overlay-layer').remove();
+            $('body').css('overflow', 'auto');
+        }
+    });
+}
