@@ -131,7 +131,7 @@ function signIn() {
             remember: remember
         },
         success: function(result) {
-            alert('반갑습니다.');
+            alert(result.email + '님 반갑습니다.');
             closeMemberLayer();
         },
         error: function(jqXHR) {
