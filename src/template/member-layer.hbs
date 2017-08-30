@@ -1,5 +1,15 @@
 <div class="ht-member-layer">
     <div class="ht-member-info">
+    {{#if signedIn}}
+        <div class="ht-signed-in">
+            <div class="ht-member-icon">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="ht-member-email">
+                {{email}}
+            </div>
+        </div>
+    {{else}}
         <div class="ht-sign-in">
             <div class="ht-member-form">
                 <div class="ht-member-logo">
@@ -76,12 +86,19 @@
                 <span class="ht-member-toggle ht-link">로그인</span>
             </div>
         </div>
+    {{/if}}
     </div>
     <div class="ht-right-menu">
         <ul class="ht-right-menu-list">
+        {{#if signedIn}}
+            <li>My Page</li>
+        {{/if}}
             <li>THEREZINE</li>
             <li>FAQ</li>
             <li>항공권 구매</li>
+        {{#if signedIn}}
+            <li id="ht-sign-out">Log Out</li>
+        {{/if}}
         </ul>
     </div>
 </div>

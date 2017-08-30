@@ -74,37 +74,54 @@ function attachEvents() {
 }
 
 $('.header-btn-member').on('click', function() {
+    $.ajax({
+        url: '/api/member/get',
+        success: function(result) {
+            openMemberLayer(result);
+        }
+    });
+});
+
+function openMemberLayer(memberInfo) {
     $('body').append('<div class="overlay-layer dark-layer"></div>');
     $('body').css('overflow', 'hidden');
 
-    var memberLayer = require('../template/member-layer.hbs');
+    var memberLayerTemplate = require('../template/member-layer.hbs');
+    var memberLayer = memberLayerTemplate(memberInfo);
 
     $('body').append(memberLayer);
-
-    $('.ht-member-toggle').on('click', function() {
-        $('.ht-sign-in').toggle();
-        $('.ht-sign-up').toggle();
-    });
 
     $('.ht-member-layer').animate({
         right: '0px'
     }, {
         duration: 500,
         complete: function() {
-            $('#ht-sign-in').on('click', function() {
-                signIn();
-            });
+            if (!memberInfo.signedIn) {
+                $('.ht-member-toggle').on('click', function() {
+                    $('.ht-sign-in').toggle();
+                    $('.ht-sign-up').toggle();
+                });
 
-            $('#ht-sign-up').on('click', function() {
-                signUp();
-            });
+                $('#ht-sign-in').on('click', function() {
+                    signIn();
+                });
+
+                $('#ht-sign-up').on('click', function() {
+                    signUp();
+                });
+            }
+            else {
+                $('#ht-sign-out').on('click', function() {
+                    signOut();
+                });
+            }
 
             $('.overlay-layer').on('click', function() {
                 closeMemberLayer();
             });
         }
     });
-});
+}
 
 function signIn() {
     var email = $('#ht-sign-in-email').val().trim();
@@ -138,6 +155,15 @@ function signIn() {
             alert(jqXHR.responseJSON.message);
         }
     })
+}
+
+function signOut() {
+    $.ajax({
+        url: '/api/member/signout',
+        success: function() {
+            closeMemberLayer();
+        }
+    });
 }
 
 function signUp() {
