@@ -1,6 +1,16 @@
 var htOption = require('./ht-option');
 var htPrice = require('./ht-price');
 
+function ajax(options) {
+    if (!options.error) {
+        options.error = function(jqXHR) {
+            alert(jqXHR.responseJSON.message);
+        };
+    }
+
+    $.ajax(options);
+}
+
 $('body').on('click', function(event) {
     var target = $(event.target);
 
@@ -139,7 +149,7 @@ function signIn() {
         return;
     }
 
-    $.ajax({
+    ajax({
         url: '/api/member/signin',
         method: 'POST',
         data: {
@@ -150,11 +160,8 @@ function signIn() {
         success: function(result) {
             alert(result.email + '님 반갑습니다.');
             closeMemberLayer();
-        },
-        error: function(jqXHR) {
-            alert(jqXHR.responseJSON.message);
         }
-    })
+    });
 }
 
 function signOut() {
@@ -215,3 +222,7 @@ function closeMemberLayer() {
         }
     });
 }
+
+module.exports = {
+    ajax: ajax
+};

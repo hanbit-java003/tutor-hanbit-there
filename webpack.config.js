@@ -86,7 +86,7 @@ module.exports = {
         contentBase: './dist',
         port: port.web,
         proxy: {
-            '/api': 'http://localhost:' + port.was,
+            '/api': 'http://localhost:' + port.was
         }
     },
     plugins: utils.getPlugins(pages)
