@@ -4,6 +4,12 @@ var htPrice = require('./ht-price');
 function ajax(options) {
     if (!options.error) {
         options.error = function(jqXHR) {
+            var errorCode = jqXHR.responseJSON.errorCode;
+
+            if (errorCode === 403) {
+                $('.header-btn-member').click();
+            }
+
             alert(jqXHR.responseJSON.message);
         };
     }
@@ -25,7 +31,7 @@ $('body').on('click', function(event) {
     }
 });
 
-$.ajax({
+ajax({
     url: '/api/menu/json',
     success: function(result) {
         initMenu(result);
