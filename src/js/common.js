@@ -127,6 +127,10 @@ function openMemberLayer(memberInfo) {
                 });
             }
             else {
+                $('#ht-setting').on('click', function() {
+                    location.href = '/setting.html';
+                });
+
                 $('#ht-sign-out').on('click', function() {
                     signOut();
                 });
