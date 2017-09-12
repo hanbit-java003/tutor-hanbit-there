@@ -178,7 +178,9 @@ function signOut() {
     $.ajax({
         url: '/api/member/signout',
         success: function() {
-            closeMemberLayer();
+            closeMemberLayer(function() {
+                location.href = '/';
+            });
         }
     });
 }
@@ -220,7 +222,7 @@ function signUp() {
     });
 }
 
-function closeMemberLayer() {
+function closeMemberLayer(callback) {
     $('.ht-member-layer').animate({
         right: '-333px'
     }, {
@@ -229,6 +231,10 @@ function closeMemberLayer() {
             $('.ht-member-layer').remove();
             $('.overlay-layer').remove();
             $('body').css('overflow', 'auto');
+
+            if (typeof callback === 'function') {
+                callback();
+            }
         }
     });
 }
